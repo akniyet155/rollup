@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { templates, type TemplateDef } from '../templates/templates'
+import { EditContext } from '../components/EditableText'
 
 export default function Builder() {
   const [selectedId, setSelectedId] = useState(templates[0].id)
@@ -8,6 +9,7 @@ export default function Builder() {
     [selectedId]
   )
   const [propsState, setPropsState] = useState<Record<string, any>>(selected?.defaultProps ?? {})
+  const [editMode, setEditMode] = useState(true)
 
   const handlePropsChange = (path: string, value: any) => {
     setPropsState(prev => {
@@ -24,13 +26,31 @@ export default function Builder() {
   }
 
   return (
-    <div className="container py-10">
-      <h1 className="text-3xl font-bold mb-6">Конструктор</h1>
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div className="container py-4 flex items-center justify-between">
+          <h1 className="text-2xl font-bold">Конструктор лендингов</h1>
+          <div className="flex items-center gap-4">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={editMode}
+                onChange={(e) => setEditMode(e.target.checked)}
+                className="w-4 h-4"
+              />
+              <span className="text-sm">Режим редактирования</span>
+            </label>
+            <button className="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark">
+              Экспорт HTML
+            </button>
+          </div>
+        </div>
+      </div>
 
-      <div className="grid md:grid-cols-3 gap-8">
-        <div className="md:col-span-1">
-          <h2 className="font-semibold mb-2">Шаблоны</h2>
-          <div className="space-y-2">
+      <div className="container py-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+          <h2 className="font-semibold mb-3">Выберите шаблон</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
             {templates.map(t => (
               <button
                 key={t.id}
@@ -38,50 +58,30 @@ export default function Builder() {
                   setSelectedId(t.id)
                   setPropsState(t.defaultProps)
                 }}
-                className={`w-full text-left px-3 py-2 rounded border ${
-                  selectedId === t.id ? 'bg-primary text-white' : 'bg-white'
+                className={`text-left px-4 py-3 rounded-lg border-2 transition-all ${
+                  selectedId === t.id 
+                    ? 'border-primary bg-primary/5 shadow-md' 
+                    : 'border-gray-200 hover:border-gray-300 bg-white'
                 }`}
               >
-                <div className="font-medium">{t.name}</div>
-                <div className="text-xs opacity-70">{t.description}</div>
+                <div className="font-medium text-sm mb-1">{t.name}</div>
+                <div className="text-xs text-gray-500 line-clamp-2">{t.description}</div>
               </button>
             ))}
           </div>
-
-          <h2 className="font-semibold mt-6 mb-2">Параметры</h2>
-          <div className="space-y-3">
-            <label className="block">
-              <span className="text-sm">Hero: заголовок</span>
-              <input
-                className="mt-1 w-full border rounded px-2 py-1"
-                value={propsState.hero?.title ?? ''}
-                onChange={e => handlePropsChange('hero.title', e.target.value)}
-              />
-            </label>
-            <label className="block">
-              <span className="text-sm">Hero: подзаголовок</span>
-              <input
-                className="mt-1 w-full border rounded px-2 py-1"
-                value={propsState.hero?.subtitle ?? ''}
-                onChange={e => handlePropsChange('hero.subtitle', e.target.value)}
-              />
-            </label>
-            <label className="block">
-              <span className="text-sm">CTA: заголовок</span>
-              <input
-                className="mt-1 w-full border rounded px-2 py-1"
-                value={propsState.cta?.title ?? ''}
-                onChange={e => handlePropsChange('cta.title', e.target.value)}
-              />
-            </label>
-          </div>
         </div>
 
-        <div className="md:col-span-2 border rounded-lg overflow-hidden">
-          <div className="bg-gray-50 border-b px-3 py-2 text-sm">Предпросмотр</div>
-          <div>
-            {selected && <selected.component {...propsState} />}
-          </div>
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          {editMode && (
+            <div className="bg-blue-50 border-b border-blue-200 px-4 py-2 text-sm text-blue-800">
+              💡 Кликните на любой текст чтобы отредактировать его
+            </div>
+          )}
+          <EditContext.Provider value={{ editMode, onEdit: handlePropsChange }}>
+            <div className="overflow-auto max-h-[calc(100vh-200px)]">
+              {selected && <selected.component {...propsState} />}
+            </div>
+          </EditContext.Provider>
         </div>
       </div>
     </div>
