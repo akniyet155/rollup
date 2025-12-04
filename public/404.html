@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Not Found</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript">
+      (function() {
+        var l = window.location;
+        // Redirect 404s to hash-based SPA entry
+        var base = '/rollup/#/';
+        var path = l.pathname.replace(/^\/rollup\//, '');
+        var query = l.search ? l.search.replace(/^\?/, '&') : '';
+        var hash = l.hash || '';
+        var target = base + path + query + hash;
+        l.replace(target);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
