@@ -16,7 +16,7 @@ export const templates: TemplateDef[] = [
     id: 'simple-landing',
     name: 'Простой лендинг',
     description: 'Hero + Features + CTA + Footer',
-    component: (props: SimpleLandingProps) => <SimpleLanding {...props} />,
+    component: SimpleLanding,
     defaultProps: {
       hero: { title: 'Ваш продукт', subtitle: 'Короткое УТП', ctaText: 'Попробовать', ctaHref: '#' },
       features: {
