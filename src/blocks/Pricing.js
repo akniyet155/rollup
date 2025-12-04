@@ -1,0 +1,8 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export default function Pricing({ heading = 'Тарифы', plans }) {
+    return (_jsx("section", { className: "py-16 bg-white", children: _jsxs("div", { className: "container", children: [heading && _jsx("h2", { className: "text-3xl font-bold mb-8 text-center", children: heading }), _jsx("div", { className: "grid md:grid-cols-3 gap-6 max-w-5xl mx-auto", children: plans.map((plan, i) => (_jsxs("div", { className: `rounded-lg p-8 ${plan.highlighted
+                            ? 'bg-primary text-white shadow-xl scale-105'
+                            : 'bg-gray-50 border border-gray-200'}`, children: [_jsx("h3", { className: "text-xl font-bold mb-2", children: plan.name }), _jsxs("div", { className: "mb-4", children: [_jsx("span", { className: "text-4xl font-bold", children: plan.price }), plan.period && _jsxs("span", { className: "text-sm opacity-80", children: ["/", plan.period] })] }), _jsx("ul", { className: "space-y-2 mb-6", children: plan.features.map((feature, fi) => (_jsxs("li", { className: "flex items-start gap-2", children: [_jsx("span", { className: plan.highlighted ? 'text-white' : 'text-primary', children: "\u2713" }), _jsx("span", { children: feature })] }, fi))) }), _jsx("a", { href: plan.buttonHref || '#', className: `block text-center px-6 py-3 rounded font-semibold ${plan.highlighted
+                                    ? 'bg-white text-primary hover:bg-gray-100'
+                                    : 'bg-primary text-white hover:bg-primary-dark'}`, children: plan.buttonText || 'Выбрать' })] }, i))) })] }) }));
+}
