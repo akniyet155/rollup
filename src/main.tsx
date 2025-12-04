@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createHashRouter } from 'react-router-dom'
 import './styles.css'
 import Home from './pages/Home'
 import Builder from './pages/Builder'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   { path: '/', element: <Home /> },
   { path: '/builder', element: <Builder /> },
 ])
