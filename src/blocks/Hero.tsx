@@ -9,30 +9,26 @@ export type HeroProps = {
 
 export default function Hero({ title, subtitle, ctaText = 'Начать', ctaHref = '#' }: HeroProps) {
   return (
-    <section className="relative gradient-primary text-white py-32 overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-300 rounded-full blur-3xl"></div>
-      </div>
+    <section className="relative gradient-tg text-white py-12 px-4">
       <div className="container text-center relative z-10">
         <EditableText 
           path="hero.title"
           value={title}
           as="h1"
-          className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up"
+          className="text-3xl font-bold mb-3"
         />
         {subtitle && (
           <EditableText 
             path="hero.subtitle"
             value={subtitle}
             as="p"
-            className="text-xl md:text-2xl opacity-95 mb-10 max-w-3xl mx-auto animate-slide-up"
+            className="text-base opacity-90 mb-6"
           />
         )}
         {ctaText && (
           <a
             href={ctaHref}
-            className="inline-block bg-white text-primary font-bold px-8 py-4 rounded-full shadow-glow hover:shadow-glow-hover transform hover:scale-105 transition-all duration-300 animate-slide-up"
+            className="inline-block bg-white text-primary font-semibold px-6 py-3 rounded-xl shadow-lg mobile-touch"
           >
             <EditableText 
               path="hero.ctaText"
